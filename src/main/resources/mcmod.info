@@ -1,0 +1,16 @@
+[
+{
+  "modid": "sr",
+  "name": "StratReminders",
+  "description": "прикольные штучки",
+  "version": "1.0",
+  "mcversion": "1.8",
+  "url": "texyle.me",
+  "updateUrl": "",
+  "authorList": ["Texyle"],
+  "credits": "не беру кредиты",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
