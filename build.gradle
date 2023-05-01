@@ -24,6 +24,8 @@ version = "1.0"
 group= "me.texyle.stratreminders" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "stratreminders"
 
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
 minecraft {
     version = "1.8.9-11.15.1.2318-1.8.9"
     runDir = "run"

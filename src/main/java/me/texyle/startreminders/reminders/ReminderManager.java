@@ -52,6 +52,10 @@ public class ReminderManager {
 	}
 	
 	public static void createReminder(ArrayList<String> lines, int x, int y, int z) {
+		if (x < 0) x--;
+		if (y < 0) y--;
+		if (z < 0) z--;
+		
 		Reminder reminder = new Reminder(lines, x, y+2, z);
 		reminderList.add(reminder);
 		saveToFile();
@@ -59,6 +63,16 @@ public class ReminderManager {
 		String str = EnumChatFormatting.DARK_AQUA + "[StratReminders] ";
 		str += EnumChatFormatting.AQUA + "Reminder saved at coordinates: ";
 		str += EnumChatFormatting.GRAY + "[" + x + ", " + y + ", " + z + "]";
+		ChatComponentText message = new ChatComponentText(str);
+		Minecraft.getMinecraft().thePlayer.addChatMessage(message);
+	}
+	
+	public static void deleteReminder(Reminder rem) {
+		reminderList.remove(rem);
+		saveToFile();
+		
+		String str = EnumChatFormatting.DARK_AQUA + "[StratReminders] ";
+		str += EnumChatFormatting.AQUA + "Reminder deleted";
 		ChatComponentText message = new ChatComponentText(str);
 		Minecraft.getMinecraft().thePlayer.addChatMessage(message);
 	}
@@ -102,5 +116,9 @@ public class ReminderManager {
 			ex.printStackTrace();
 		}
 		
+	}
+	
+	public static ArrayList<Reminder> getReminderList() {
+		return reminderList;
 	}
 }

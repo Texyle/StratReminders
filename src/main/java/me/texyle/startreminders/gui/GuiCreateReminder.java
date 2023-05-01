@@ -19,14 +19,14 @@ public class GuiCreateReminder extends GuiScreen {
 	private int textLineWidth = 200;
 	private int offset = 0;
 	protected GuiButton saveButton;
-	private GuiTextField textLine1;
-	private GuiTextField textLine2;
-	private GuiTextField textLine3;
-	private GuiTextField textLine4;
-	private GuiTextField textLine5;
-	private GuiTextField textX;
-	private GuiTextField textY;
-	private GuiTextField textZ;
+	protected GuiTextField textLine1;
+	protected GuiTextField textLine2;
+	protected GuiTextField textLine3;
+	protected GuiTextField textLine4;
+	protected GuiTextField textLine5;
+	protected GuiTextField textX;
+	protected GuiTextField textY;
+	protected GuiTextField textZ;
 	protected String titleText = "  Create reminder  ";
 		
 	@Override
@@ -109,7 +109,8 @@ public class GuiCreateReminder extends GuiScreen {
 		textLine4.textboxKeyTyped(typedChar, keyCode);
 		textLine5.textboxKeyTyped(typedChar, keyCode);
 		
-		if (Character.isDigit(typedChar)) {
+		System.out.println(keyCode);
+		if (Character.isDigit(typedChar) || keyCode == 14) {
 			textX.textboxKeyTyped(typedChar, keyCode);
 			textY.textboxKeyTyped(typedChar, keyCode);
 			textZ.textboxKeyTyped(typedChar, keyCode);
