@@ -3,6 +3,7 @@ package me.texyle.startreminders.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import me.texyle.startreminders.StratReminders;
 import me.texyle.startreminders.reminders.ReminderManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -19,6 +20,7 @@ public class GuiCreateReminder extends GuiScreen {
 	private int textLineWidth = 200;
 	private int offset = 0;
 	protected GuiButton saveButton;
+	protected GuiButton switchMenuButton; 
 	protected GuiTextField textLine1;
 	protected GuiTextField textLine2;
 	protected GuiTextField textLine3;
@@ -36,6 +38,12 @@ public class GuiCreateReminder extends GuiScreen {
 		saveButton = new GuiButton(5, 0, this.height/14*10, "Save");
 		saveButton.xPosition = (this.width - saveButton.width) / 2;
 		buttonList.add(saveButton);
+		
+		switchMenuButton = new GuiButton(16, 0, 0, "Edit menu");
+		switchMenuButton.width = 100;
+		switchMenuButton.xPosition = this.width-102;
+		switchMenuButton.yPosition = 2;
+		buttonList.add(switchMenuButton);
 		
 		createTextLines();
 	}
@@ -110,10 +118,72 @@ public class GuiCreateReminder extends GuiScreen {
 		textLine5.textboxKeyTyped(typedChar, keyCode);
 		
 		System.out.println(keyCode);
+		
 		if (Character.isDigit(typedChar) || keyCode == 14) {
 			textX.textboxKeyTyped(typedChar, keyCode);
 			textY.textboxKeyTyped(typedChar, keyCode);
 			textZ.textboxKeyTyped(typedChar, keyCode);
+		} else if (keyCode == 28) {
+			GuiTextField currentField = null;
+			GuiTextField nextField = null;
+			
+			if (textLine1.isFocused()) {
+				currentField = textLine1;
+				nextField = textLine2;
+			} else if (textLine2.isFocused()) {
+				currentField = textLine2;
+				nextField = textLine3;
+			} else if (textLine3.isFocused()) {
+				currentField = textLine3;
+				nextField = textLine4;
+			} else if (textLine4.isFocused()) {
+				currentField = textLine4;
+				nextField = textLine5;
+			}
+			
+			if (currentField != null) {
+				String str = currentField.getText();
+				nextField.setText(str.substring(currentField.getCursorPosition()) + nextField.getText());
+				currentField.setText(str.substring(0, currentField.getCursorPosition()));
+				
+				nextField.setFocused(true);
+				nextField.setCursorPosition(0);
+				currentField.setFocused(false);
+			}
+		} else if (keyCode == 200 || keyCode == 208) {
+			GuiTextField previousField = null;
+			GuiTextField currentField = null;
+			GuiTextField nextField = null;
+			
+			if (textLine1.isFocused()) {
+				currentField = textLine1;
+				nextField = textLine2;
+			} else if (textLine2.isFocused()) {
+				previousField = textLine1;
+				currentField = textLine2;
+				nextField = textLine3;
+			} else if (textLine3.isFocused()) {
+				previousField = textLine2;
+				currentField = textLine3;
+				nextField = textLine4;
+			} else if (textLine4.isFocused()) {
+				previousField = textLine3;
+				currentField = textLine4;
+				nextField = textLine5;
+			} else if (textLine5.isFocused()) {
+				previousField = textLine4;
+				currentField = textLine5;
+			}
+			
+			if (keyCode == 200 && previousField != null) {
+				previousField.setFocused(true);
+				previousField.setCursorPositionEnd();
+				currentField.setFocused(false);
+			} else if (keyCode == 208 && nextField != null) {
+				nextField.setFocused(true);
+				nextField.setCursorPositionEnd();
+				currentField.setFocused(false);
+			}
 		}
 		
 		super.keyTyped(typedChar, keyCode);
@@ -151,6 +221,8 @@ public class GuiCreateReminder extends GuiScreen {
 				ReminderManager.createReminder(lines, x, y, z);
 			
 			Minecraft.getMinecraft().displayGuiScreen(null);
+		} else if (button.id == 16) {
+			this.mc.displayGuiScreen(new GuiEditReminders());
 		}
 		
 		super.actionPerformed(button);

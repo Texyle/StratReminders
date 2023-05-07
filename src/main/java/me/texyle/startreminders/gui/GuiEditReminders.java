@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import me.texyle.startreminders.StratReminders;
 import me.texyle.startreminders.reminders.Reminder;
 import me.texyle.startreminders.reminders.ReminderManager;
 import net.minecraft.client.Minecraft;
@@ -64,7 +65,10 @@ public class GuiEditReminders extends GuiCreateReminder {
 		buttonDelete = new GuiButton(13, saveButton.xPosition, this.height/14*11+24, EnumChatFormatting.RED + "Delete");
 		buttonList.add(buttonDelete);
 		
-		saveButton.yPosition = this.height/14*11;	
+		saveButton.yPosition = this.height/14*11;
+		
+		switchMenuButton.displayString = "Create menu";
+		switchMenuButton.id = 17;
 		
 		fillTextLines();
 	}
@@ -75,7 +79,6 @@ public class GuiEditReminders extends GuiCreateReminder {
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 		
-		this.drawDefaultBackground();
 		super.drawScreen(p_drawScreen_1_, p_drawScreen_2_, p_drawScreen_3_);
 		
 		int w = fontRendererObj.getStringWidth(numStr);
@@ -126,7 +129,6 @@ public class GuiEditReminders extends GuiCreateReminder {
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		
 		if (button.id == buttonLeft.id) {
 			if (selectedIndex > 1) {
 				selectedReminder = sortedReminderList.get(--selectedIndex-1);
@@ -169,6 +171,8 @@ public class GuiEditReminders extends GuiCreateReminder {
 			numStr += sortedReminderList.size();
 			selectedReminder = sortedReminderList.get(0);
 			fillTextLines();
+		} else if (button.id == switchMenuButton.id) {
+			this.mc.displayGuiScreen(new GuiCreateReminder());
 		}
 		
 		super.actionPerformed(button);

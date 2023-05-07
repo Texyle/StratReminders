@@ -2,13 +2,13 @@
 {
   "modid": "sr",
   "name": "StratReminders",
-  "description": "прикольные штучки",
-  "version": "1.0",
+  "description": "A mod for making strat reminders",
+  "version": "1.11",
   "mcversion": "1.8",
-  "url": "texyle.me",
+  "url": "https://github.com/Texyle/StratReminders",
   "updateUrl": "",
   "authorList": ["Texyle"],
-  "credits": "не беру кредиты",
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
